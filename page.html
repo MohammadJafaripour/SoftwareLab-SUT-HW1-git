@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Git Features & Workflow Guide</title>
+    <title>Static Frontend Git Laboratory Dashboard</title>
     <style>
         :root {
             --bg-color: #0f172a;
             --card-bg: #1e293b;
             --accent-color: #38bdf8;
             --success-color: #4ade80;
+            --warning-color: #f59e0b;
+            --danger-color: #f43f5e;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border-color: #334155;
@@ -30,7 +32,7 @@
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
@@ -54,7 +56,7 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 1.5rem;
             margin-bottom: 3rem;
         }
@@ -64,6 +66,9 @@
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             transition: transform 0.2s, border-color 0.2s;
         }
 
@@ -73,7 +78,7 @@
         }
 
         .card h2 {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             color: var(--success-color);
             margin-bottom: 0.75rem;
             display: flex;
@@ -84,7 +89,8 @@
         .card p {
             color: var(--text-muted);
             font-size: 0.95rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
+            flex-grow: 1;
         }
 
         .code-block {
@@ -98,22 +104,43 @@
             border-left: 3px solid var(--accent-color);
         }
 
-        .workflow-section {
+        .card.alert h2 {
+            color: var(--warning-color);
+        }
+
+        .card.alert .code-block {
+            border-left-color: var(--warning-color);
+        }
+
+        .card.danger h2 {
+            color: var(--danger-color);
+        }
+
+        .card.danger .code-block {
+            border-left-color: var(--danger-color);
+        }
+
+        .split-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .section-box {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 2rem;
         }
 
-        .workflow-section h2 {
+        .section-box h2 {
             color: var(--accent-color);
             margin-bottom: 1rem;
+            font-size: 1.5rem;
         }
 
         .timeline {
             list-style: none;
-            position: relative;
-            padding-left: 1rem;
         }
 
         .timeline li {
@@ -123,7 +150,7 @@
         }
 
         .timeline li::before {
-            content: "→";
+            content: "✓";
             position: absolute;
             left: 0;
             color: var(--success-color);
@@ -132,12 +159,32 @@
 
         .timeline strong {
             color: var(--text-main);
+            display: block;
         }
 
         .timeline span {
-            display: block;
             color: var(--text-muted);
             font-size: 0.9rem;
+        }
+
+        .badge-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .badge {
+            background: #090d16;
+            border: 1px solid var(--border-color);
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .badge span {
+            color: var(--accent-color);
+            font-weight: bold;
+            display: block;
         }
 
         footer {
@@ -145,6 +192,14 @@
             margin-top: 4rem;
             color: var(--text-muted);
             font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .split-layout {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -152,89 +207,125 @@
 
     <div class="container">
         <header>
-            <h1>Git Architecture & Features</h1>
-            <p>An interactive documentation project exploring version control mechanics</p>
+            <h1>Automated Static Frontend Lab</h1>
+            <p>Laboratory Assignment Documentation: Version Control, Collaboration, and Deployment Rules</p>
         </header>
 
         <main>
             <div class="grid">
                 <div class="card">
-                    <h2>01. Initialization & Staging</h2>
-                    <p>Setting up a tracking environment and preparing specific file modifications for the tracking history.</p>
+                    <h2>01. CLI Execution</h2>
+                    <p>Execute all Git version control operations manually inside the native terminal environment. Avoid IDE graphical interfaces to master foundational plumbing commands.</p>
                     <div class="code-block">
-                        git init<br>
-                        git add index.html
+                        git status<br>
+                        git log --oneline
                     </div>
                 </div>
 
                 <div class="card">
-                    <h2>02. Commits</h2>
-                    <p>Recording a permanent snapshot of the staged changes in the local repository timeline with a descriptive log message.</p>
+                    <h2>02. Environment Hygiene</h2>
+                    <p>Incorporate a structured .gitignore file right at project initialization to prevent local environment debris or system-specific artifacts from tracking.</p>
                     <div class="code-block">
-                        git commit -m "Feat: Add layout structure"
+                        # .gitignore<br>
+                        .DS_Store<br>
+                        node_modules/<br>
+                        dist/
                     </div>
                 </div>
 
                 <div class="card">
-                    <h2>03. Branching</h2>
-                    <p>Creating independent lines of development to safely test features or fix bugs without disrupting the production codebase.</p>
+                    <h2>03. Semantic Architecture</h2>
+                    <p>Maintain at least 3 distinct, functional branches (e.g., main, dev, feature/*, hotfix/*) to manage stable production increments and separate active development tracks.</p>
                     <div class="code-block">
-                        git checkout -b feature/ui-design
+                        git branch -a<br>
+                        git checkout -b dev
+                    </div>
+                </div>
+
+                <div class="card alert">
+                    <h2>04. Commit History</h2>
+                    <p>Document the application construction with a minimum of 20 distinct, atomic, and meaningful commits tracking unique milestones or logical changes.</p>
+                    <div class="code-block">
+                        git commit -m "feat: implement main grid"<br>
+                        Total Commits Needed: &ge; 20
+                    </div>
+                </div>
+
+                <div class="card danger">
+                    <h2>05. Conflict Resolution</h2>
+                    <p>Simulate, analyze, and manually resolve at least 2 structural merge conflicts inside the source text when integrating converging branch timelines.</p>
+                    <div class="code-block">
+                        &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD<br>
+                        color: var(--accent-color);<br>
+                        =======<br>
+                        color: #38bdf8;<br>
+                        &gt;&gt;&gt;&gt;&gt;&gt;&gt; dev
                     </div>
                 </div>
 
                 <div class="card">
-                    <h2>04. Remote Management</h2>
-                    <p>Linking the local repository to a hosted server platform and updating target endpoint destinations.</p>
+                    <h2>06. Branch Security</h2>
+                    <p>Configure repository platform rules to entirely block direct force-pushes to the main branch, mandating peer reviews before code merging can take place.</p>
                     <div class="code-block">
-                        git remote set-url origin &lt;URL&gt;<br>
-                        git remote -v
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h2>05. Distribution</h2>
-                    <p>Uploading localized branch history updates to the designated remote repository platform tracking system.</p>
-                    <div class="code-block">
-                        git push origin feature/ui-design
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h2>06. Collaboration Controls</h2>
-                    <p>Enforcing branch protection rules on server platforms to block direct pushing and require code integrations via verified merge reviews.</p>
-                    <div class="code-block">
-                        Main Branch Policy: Enabled<br>
-                        Enforce Pull Request: True
+                        Target: main<br>
+                        Require Pull Request: Enforced
                     </div>
                 </div>
             </div>
 
-            <section class="workflow-section">
-                <h2>Standard Feature Workflow</h2>
-                <ul class="timeline">
-                    <li>
-                        <strong>Isolate workspace</strong>
-                        <span>Create a brand new local feature branch to protect the integrity of the master tracking branch.</span>
-                    </li>
-                    <li>
-                        <strong>Incremental saves</strong>
-                        <span>Stage files progressively and commit clear atomic units of work with semantic log naming conventions.</span>
-                    </li>
-                    <li>
-                        <strong>Synchronize state</strong>
-                        <span>Push the isolated feature branch up to the remote hosting platform target destination.</span>
-                    </li>
-                    <li>
-                        <strong>Propose integration</strong>
-                        <span>Initiate a Pull Request target review system to evaluate incoming changes before final code deployment.</span>
-                    </li>
-                </ul>
-            </section>
+            <div class="split-layout">
+                <section class="section-box">
+                    <h2>CI/CD Actions Deployment Workflow</h2>
+                    <ul class="timeline">
+                        <li>
+                            <strong>Shared Repository Integration</strong>
+                            <span>All registered team members concurrently collaborate on code changes using a centralized GitHub remote hosting platform destination.</span>
+                        </li>
+                        <li>
+                            <strong>Peer Review Validation</strong>
+                            <span>Isolate features into staging branches, push updates upstream, and propose integration changes exclusively via Pull Requests.</span>
+                        </li>
+                        <li>
+                            <strong>Automated Pipeline Trigger</strong>
+                            <span>GitHub Actions picks up accepted merges to the main branch automatically via configured workflow parameters.</span>
+                        </li>
+                        <li>
+                            <strong>Static Cloud Hosting</strong>
+                            <span>The automation runner compiles assets and updates the running application interface live on GitHub Pages.</span>
+                        </li>
+                    </ul>
+                </section>
+
+                <aside class="section-box">
+                    <h2>Lab Targets</h2>
+                    <div class="badge-list">
+                        <div class="badge">
+                            <span>Platform Engine</span>
+                            Pure Static HTML5 / CSS3
+                        </div>
+                        <div class="badge">
+                            <span>Branch Total</span>
+                            3+ Semantic Paths
+                        </div>
+                        <div class="badge">
+                            <span>History Volume</span>
+                            20+ Verifiable Commits
+                        </div>
+                        <div class="badge">
+                            <span>Conflicts Handled</span>
+                            2+ Instances Resolved
+                        </div>
+                        <div class="badge">
+                            <span>Pipeline Engine</span>
+                            GitHub Actions Engine
+                        </div>
+                    </div>
+                </aside>
+            </div>
         </main>
 
         <footer>
-            <p>Git Practice Lab Portfolio • Built with Semantic HTML5 & CSS Custom Properties</p>
+            <p>Shared Engineering Portfolio • Automated Deployment System Matrix</p>
         </footer>
     </div>
 
