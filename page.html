@@ -201,15 +201,12 @@
       .card.alert h2 {
         color: var(--warning-color);
       }
-
       .card.alert .code-block {
         border-left-color: var(--warning-color);
       }
-
       .card.danger h2 {
         color: var(--danger-color);
       }
-
       .card.danger .code-block {
         border-left-color: var(--danger-color);
       }
@@ -275,7 +272,6 @@
         color: var(--text-main);
         display: block;
       }
-
       .timeline span {
         color: var(--text-muted);
         font-size: 0.9rem;
@@ -301,7 +297,7 @@
         display: block;
       }
 
-      /* ── COMMIT 1: Cheat Sheet – static structure & layout ── */
+      /* ── Cheat Sheet base layout (from Commit 1) ── */
       .cheatsheet-section {
         background-color: var(--card-bg);
         border: 1px solid var(--border-color);
@@ -310,17 +306,17 @@
         margin-bottom: 3rem;
       }
 
-      .cheatsheet-section h2 {
+      .cheatsheet-section > h2 {
         color: var(--accent-color);
         font-size: 1.6rem;
         border-bottom: 1px solid var(--border-color);
         padding-bottom: 0.5rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
       }
 
       .cheatsheet-section > p {
         color: var(--text-muted);
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.25rem;
         font-size: 0.95rem;
       }
 
@@ -354,7 +350,6 @@
       .cheat-table tr {
         border-bottom: 1px solid var(--border-color);
       }
-
       .cheat-table tr:last-child {
         border-bottom: none;
       }
@@ -376,6 +371,100 @@
         color: var(--text-muted);
       }
 
+      /* ── COMMIT 2: search bar + filter tabs + highlight + empty state ── */
+      .cheat-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .cheat-search {
+        flex: 1;
+        min-width: 200px;
+        background: var(--code-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        padding: 0.55rem 0.9rem;
+        font-size: 0.9rem;
+        color: var(--text-main);
+        outline: none;
+        transition: border-color 0.2s;
+      }
+
+      .cheat-search::placeholder {
+        color: var(--text-muted);
+      }
+      .cheat-search:focus {
+        border-color: var(--accent-color);
+      }
+
+      .filter-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .filter-tab {
+        background: var(--code-bg);
+        border: 1px solid var(--border-color);
+        color: var(--text-muted);
+        padding: 0.4rem 0.85rem;
+        border-radius: 20px;
+        font-size: 0.82rem;
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          color 0.15s,
+          border-color 0.15s;
+        white-space: nowrap;
+      }
+
+      .filter-tab:hover {
+        border-color: var(--accent-color);
+        color: var(--accent-color);
+      }
+
+      .filter-tab.active {
+        background: var(--accent-color);
+        border-color: var(--accent-color);
+        color: #0f172a;
+        font-weight: 600;
+      }
+
+      /* rows hidden by JS get display:none; highlighted matches */
+      .cheat-table tr.hidden {
+        display: none;
+      }
+
+      mark.cheat-highlight {
+        background: transparent;
+        color: var(--accent-color);
+        font-weight: bold;
+      }
+
+      .cheat-empty {
+        display: none;
+        text-align: center;
+        padding: 2rem 1rem;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+      }
+
+      .cheat-empty.visible {
+        display: block;
+      }
+
+      /* match counter badge */
+      .match-count {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin-left: auto;
+        align-self: center;
+        white-space: nowrap;
+      }
+
       footer {
         text-align: center;
         margin-top: 4rem;
@@ -389,18 +478,18 @@
         .split-layout {
           grid-template-columns: 1fr;
         }
-
         .team-container {
           flex-direction: column;
           align-items: center;
         }
-
         header h1 {
           font-size: 1.8rem;
         }
-
         .grid {
           grid-template-columns: 1fr;
+        }
+        .cheat-search {
+          min-width: 100%;
         }
       }
     </style>
@@ -467,7 +556,6 @@
             </p>
             <div class="code-block">git status git log --oneline --graph</div>
           </div>
-
           <div class="card">
             <h2>02. Environment Hygiene</h2>
             <p>
@@ -479,7 +567,6 @@
               # .gitignore node_modules/ .DS_Store dist/
             </div>
           </div>
-
           <div class="card">
             <h2>03. Semantic Architecture</h2>
             <p>
@@ -489,7 +576,6 @@
             </p>
             <div class="code-block">git branch -a git checkout -b dev</div>
           </div>
-
           <div class="card alert">
             <h2>04. Commit History</h2>
             <p>
@@ -501,7 +587,6 @@
               git commit -m "feat: implement layout" Total Commits Needed: ≥ 20
             </div>
           </div>
-
           <div class="card danger">
             <h2>05. Conflict Resolution</h2>
             <p>
@@ -514,7 +599,6 @@
               ======= color: #38bdf8; &gt;&gt;&gt;&gt;&gt;&gt;&gt; dev
             </div>
           </div>
-
           <div class="card">
             <h2>06. Branch Security</h2>
             <p>
@@ -530,7 +614,6 @@
 
         <section class="wide-section">
           <h2>3. Step-by-Step Terminal Execution Log</h2>
-
           <div class="log-step">
             <h3>Step 1: Initializing the Project Workspace</h3>
             <p style="color: var(--text-muted); margin-bottom: 0.5rem">
@@ -543,7 +626,6 @@
               git commit -m "chore: initialize project workspace and .gitignore"
             </div>
           </div>
-
           <div class="log-step">
             <h3>Step 2: Setting up Upstream Cloud Remotes</h3>
             <p style="color: var(--text-muted); margin-bottom: 0.5rem">
@@ -555,7 +637,6 @@
               remote -v
             </div>
           </div>
-
           <div class="log-step">
             <h3>Step 3: Establishing the Semantic Branch Architecture</h3>
             <p style="color: var(--text-muted); margin-bottom: 0.5rem">
@@ -565,7 +646,6 @@
               git checkout -b dev git checkout -b feature/dashboard-ui
             </div>
           </div>
-
           <div class="log-step">
             <h3>Step 4: Iterating Atomic Commit Logs (Example Sequence)</h3>
             <p style="color: var(--text-muted); margin-bottom: 0.5rem">
@@ -578,7 +658,6 @@
               dark theme color palette variables"
             </div>
           </div>
-
           <div class="log-step">
             <h3>Step 5: Handling and Resolving Merge Conflicts</h3>
             <p style="color: var(--text-muted); margin-bottom: 0.5rem">
@@ -593,7 +672,6 @@
               conflict manually"
             </div>
           </div>
-
           <div class="log-step">
             <h3>Step 6: Upstream Sync and Pull Request Processing</h3>
             <p style="color: var(--text-muted); margin-bottom: 0.5rem">
@@ -668,43 +746,62 @@
               </li>
             </ul>
           </section>
-
           <aside class="section-box">
             <h2>Lab Targets</h2>
             <div class="badge-list">
               <div class="badge">
-                <span>Platform Engine</span>
-                Pure Static HTML5 / CSS3
+                <span>Platform Engine</span>Pure Static HTML5 / CSS3
               </div>
               <div class="badge">
-                <span>Branch Total</span>
-                3+ Semantic Paths
+                <span>Branch Total</span>3+ Semantic Paths
               </div>
               <div class="badge">
-                <span>History Volume</span>
-                20+ Verifiable Commits
+                <span>History Volume</span>20+ Verifiable Commits
               </div>
               <div class="badge">
-                <span>Conflicts Handled</span>
-                2+ Instances Resolved
+                <span>Conflicts Handled</span>2+ Instances Resolved
               </div>
               <div class="badge">
-                <span>Pipeline Engine</span>
-                GitHub Actions Engine
+                <span>Pipeline Engine</span>GitHub Actions Engine
               </div>
             </div>
           </aside>
         </div>
 
-        <!-- ── COMMIT 1: Git Cheat Sheet – static HTML structure ── -->
-        <section class="cheatsheet-section">
+        <!-- ── Git Cheat Sheet: with search + filter (Commit 2) ── -->
+        <section class="cheatsheet-section" id="cheatsheet">
           <h2>5. Git Command Reference</h2>
-          <p>
-            A categorized quick-reference of the essential Git commands used
-            throughout this lab assignment.
-          </p>
+          <p>Search or filter by category to find the Git command you need.</p>
 
-          <div class="cheat-category">
+          <!-- COMMIT 2: controls bar -->
+          <div class="cheat-controls">
+            <input
+              type="text"
+              class="cheat-search"
+              id="cheatSearch"
+              placeholder="🔍  Search commands or descriptions…"
+              autocomplete="off"
+            />
+            <div class="filter-tabs" id="filterTabs">
+              <button class="filter-tab active" data-cat="all">All</button>
+              <button class="filter-tab" data-cat="setup">Setup & Init</button>
+              <button class="filter-tab" data-cat="staging">
+                Staging & Committing
+              </button>
+              <button class="filter-tab" data-cat="branching">
+                Branching & Merging
+              </button>
+              <button class="filter-tab" data-cat="remote">
+                Remote Operations
+              </button>
+              <button class="filter-tab" data-cat="history">
+                History & Inspection
+              </button>
+            </div>
+            <span class="match-count" id="matchCount"></span>
+          </div>
+
+          <div class="cheat-category" data-cat="setup">
             <h3>Setup & Init</h3>
             <table class="cheat-table">
               <tr>
@@ -726,7 +823,7 @@
             </table>
           </div>
 
-          <div class="cheat-category">
+          <div class="cheat-category" data-cat="staging">
             <h3>Staging & Committing</h3>
             <table class="cheat-table">
               <tr>
@@ -752,7 +849,7 @@
             </table>
           </div>
 
-          <div class="cheat-category">
+          <div class="cheat-category" data-cat="branching">
             <h3>Branching & Merging</h3>
             <table class="cheat-table">
               <tr>
@@ -778,7 +875,7 @@
             </table>
           </div>
 
-          <div class="cheat-category">
+          <div class="cheat-category" data-cat="remote">
             <h3>Remote Operations</h3>
             <table class="cheat-table">
               <tr>
@@ -800,7 +897,7 @@
             </table>
           </div>
 
-          <div class="cheat-category">
+          <div class="cheat-category" data-cat="history">
             <h3>History & Inspection</h3>
             <table class="cheat-table">
               <tr>
@@ -821,6 +918,10 @@
               </tr>
             </table>
           </div>
+
+          <p class="cheat-empty" id="cheatEmpty">
+            No commands match your search. Try a different keyword.
+          </p>
         </section>
       </main>
 
@@ -830,18 +931,17 @@
     </div>
 
     <script>
+      /* ── Theme toggle ── */
       const themeToggle = document.getElementById("themeToggle");
       const body = document.body;
 
-      const savedTheme = localStorage.getItem("theme");
-      if (savedTheme === "light") {
+      if (localStorage.getItem("theme") === "light") {
         body.classList.add("light-mode");
         themeToggle.textContent = "🌙 Dark Mode";
       }
 
       themeToggle.addEventListener("click", () => {
         body.classList.toggle("light-mode");
-
         if (body.classList.contains("light-mode")) {
           themeToggle.textContent = "🌙 Dark Mode";
           localStorage.setItem("theme", "light");
@@ -849,6 +949,96 @@
           themeToggle.textContent = "☀️ Light Mode";
           localStorage.setItem("theme", "dark");
         }
+      });
+
+      /* ── COMMIT 2: Cheat sheet – search + filter logic ── */
+      const searchInput = document.getElementById("cheatSearch");
+      const filterTabs = document.querySelectorAll(".filter-tab");
+      const categories = document.querySelectorAll(".cheat-category");
+      const emptyMsg = document.getElementById("cheatEmpty");
+      const matchCount = document.getElementById("matchCount");
+
+      let activeCategory = "all";
+
+      /* Wrap a text node's matching substring in a <mark> */
+      function highlight(td, term) {
+        const original = td.dataset.original ?? td.textContent;
+        td.dataset.original = original;
+
+        if (!term) {
+          td.innerHTML = original;
+          return;
+        }
+        const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const regex = new RegExp(`(${escaped})`, "gi");
+        td.innerHTML = original.replace(
+          regex,
+          '<mark class="cheat-highlight">$1</mark>',
+        );
+      }
+
+      function applyFilters() {
+        const term = searchInput.value.trim().toLowerCase();
+        let totalVisible = 0;
+
+        categories.forEach((cat) => {
+          const catKey = cat.dataset.cat;
+          const catMatches =
+            activeCategory === "all" || activeCategory === catKey;
+
+          if (!catMatches) {
+            cat.style.display = "none";
+            return;
+          }
+          cat.style.display = "";
+
+          const rows = cat.querySelectorAll("tr");
+          let catVisible = 0;
+
+          rows.forEach((row) => {
+            const tds = row.querySelectorAll("td");
+            const text = Array.from(tds)
+              .map((td) =>
+                (td.dataset.original ?? td.textContent).toLowerCase(),
+              )
+              .join(" ");
+            const matches = !term || text.includes(term);
+
+            if (matches) {
+              row.classList.remove("hidden");
+              tds.forEach((td) => highlight(td, term));
+              catVisible++;
+              totalVisible++;
+            } else {
+              row.classList.add("hidden");
+              tds.forEach((td) => highlight(td, ""));
+            }
+          });
+
+          /* Hide the whole category block if nothing matches */
+          cat.style.display = catVisible === 0 ? "none" : "";
+        });
+
+        /* Empty state */
+        emptyMsg.classList.toggle("visible", totalVisible === 0);
+
+        /* Match counter */
+        if (term || activeCategory !== "all") {
+          matchCount.textContent = `${totalVisible} command${totalVisible !== 1 ? "s" : ""} shown`;
+        } else {
+          matchCount.textContent = "";
+        }
+      }
+
+      searchInput.addEventListener("input", applyFilters);
+
+      filterTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          filterTabs.forEach((t) => t.classList.remove("active"));
+          tab.classList.add("active");
+          activeCategory = tab.dataset.cat;
+          applyFilters();
+        });
       });
     </script>
   </body>
