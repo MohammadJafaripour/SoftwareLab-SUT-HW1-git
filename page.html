@@ -1,1 +1,242 @@
-<html> test </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git Features & Workflow Guide</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #38bdf8;
+            --success-color: #4ade80;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 1.5rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-color);
+        }
+
+        .card h2 {
+            font-size: 1.3rem;
+            color: var(--success-color);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .code-block {
+            background-color: #090d16;
+            padding: 0.75rem;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85rem;
+            color: #e2e8f0;
+            overflow-x: auto;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .workflow-section {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+        }
+
+        .workflow-section h2 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .timeline {
+            list-style: none;
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .timeline li {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .timeline li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .timeline strong {
+            color: var(--text-main);
+        }
+
+        .timeline span {
+            display: block;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Git Architecture & Features</h1>
+            <p>An interactive documentation project exploring version control mechanics</p>
+        </header>
+
+        <main>
+            <div class="grid">
+                <div class="card">
+                    <h2>01. Initialization & Staging</h2>
+                    <p>Setting up a tracking environment and preparing specific file modifications for the tracking history.</p>
+                    <div class="code-block">
+                        git init<br>
+                        git add index.html
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>02. Commits</h2>
+                    <p>Recording a permanent snapshot of the staged changes in the local repository timeline with a descriptive log message.</p>
+                    <div class="code-block">
+                        git commit -m "Feat: Add layout structure"
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>03. Branching</h2>
+                    <p>Creating independent lines of development to safely test features or fix bugs without disrupting the production codebase.</p>
+                    <div class="code-block">
+                        git checkout -b feature/ui-design
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>04. Remote Management</h2>
+                    <p>Linking the local repository to a hosted server platform and updating target endpoint destinations.</p>
+                    <div class="code-block">
+                        git remote set-url origin &lt;URL&gt;<br>
+                        git remote -v
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>05. Distribution</h2>
+                    <p>Uploading localized branch history updates to the designated remote repository platform tracking system.</p>
+                    <div class="code-block">
+                        git push origin feature/ui-design
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>06. Collaboration Controls</h2>
+                    <p>Enforcing branch protection rules on server platforms to block direct pushing and require code integrations via verified merge reviews.</p>
+                    <div class="code-block">
+                        Main Branch Policy: Enabled<br>
+                        Enforce Pull Request: True
+                    </div>
+                </div>
+            </div>
+
+            <section class="workflow-section">
+                <h2>Standard Feature Workflow</h2>
+                <ul class="timeline">
+                    <li>
+                        <strong>Isolate workspace</strong>
+                        <span>Create a brand new local feature branch to protect the integrity of the master tracking branch.</span>
+                    </li>
+                    <li>
+                        <strong>Incremental saves</strong>
+                        <span>Stage files progressively and commit clear atomic units of work with semantic log naming conventions.</span>
+                    </li>
+                    <li>
+                        <strong>Synchronize state</strong>
+                        <span>Push the isolated feature branch up to the remote hosting platform target destination.</span>
+                    </li>
+                    <li>
+                        <strong>Propose integration</strong>
+                        <span>Initiate a Pull Request target review system to evaluate incoming changes before final code deployment.</span>
+                    </li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <p>Git Practice Lab Portfolio • Built with Semantic HTML5 & CSS Custom Properties</p>
+        </footer>
+    </div>
+
+</body>
+</html>
