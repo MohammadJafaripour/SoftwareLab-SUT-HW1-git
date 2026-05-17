@@ -301,6 +301,81 @@
         display: block;
       }
 
+      /* ── COMMIT 1: Cheat Sheet – static structure & layout ── */
+      .cheatsheet-section {
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .cheatsheet-section h2 {
+        color: var(--accent-color);
+        font-size: 1.6rem;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .cheatsheet-section > p {
+        color: var(--text-muted);
+        margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+      }
+
+      .cheat-category {
+        margin-bottom: 2rem;
+      }
+
+      .cheat-category h3 {
+        font-size: 1rem;
+        color: var(--success-color);
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .cheat-category h3::before {
+        content: "";
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: var(--success-color);
+      }
+
+      .cheat-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .cheat-table tr {
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .cheat-table tr:last-child {
+        border-bottom: none;
+      }
+
+      .cheat-table td {
+        padding: 0.6rem 0.5rem;
+        font-size: 0.88rem;
+        vertical-align: top;
+      }
+
+      .cheat-table td:first-child {
+        font-family: "Courier New", Courier, monospace;
+        color: var(--accent-color);
+        white-space: nowrap;
+        width: 45%;
+      }
+
+      .cheat-table td:last-child {
+        color: var(--text-muted);
+      }
+
       footer {
         text-align: center;
         margin-top: 4rem;
@@ -557,7 +632,7 @@
           </div>
         </section>
 
-        <div class="split-layout">
+        <div class="split-layout" style="margin-bottom: 3rem">
           <section class="section-box">
             <h2>CI/CD Actions Deployment Workflow</h2>
             <ul class="timeline">
@@ -620,6 +695,133 @@
             </div>
           </aside>
         </div>
+
+        <!-- ── COMMIT 1: Git Cheat Sheet – static HTML structure ── -->
+        <section class="cheatsheet-section">
+          <h2>5. Git Command Reference</h2>
+          <p>
+            A categorized quick-reference of the essential Git commands used
+            throughout this lab assignment.
+          </p>
+
+          <div class="cheat-category">
+            <h3>Setup & Init</h3>
+            <table class="cheat-table">
+              <tr>
+                <td>git init [name]</td>
+                <td>Create a new local repository in a new folder</td>
+              </tr>
+              <tr>
+                <td>git clone [url]</td>
+                <td>Clone a remote repository locally</td>
+              </tr>
+              <tr>
+                <td>git config --global user.name</td>
+                <td>Set your global author name for commits</td>
+              </tr>
+              <tr>
+                <td>git config --global user.email</td>
+                <td>Set your global author email for commits</td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="cheat-category">
+            <h3>Staging & Committing</h3>
+            <table class="cheat-table">
+              <tr>
+                <td>git status</td>
+                <td>Show working tree status and staged changes</td>
+              </tr>
+              <tr>
+                <td>git add [file]</td>
+                <td>Stage a specific file for the next commit</td>
+              </tr>
+              <tr>
+                <td>git add .</td>
+                <td>Stage all changed files in the working directory</td>
+              </tr>
+              <tr>
+                <td>git commit -m "[msg]"</td>
+                <td>Record staged snapshot with a descriptive message</td>
+              </tr>
+              <tr>
+                <td>git commit --amend</td>
+                <td>Modify the most recent commit message or content</td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="cheat-category">
+            <h3>Branching & Merging</h3>
+            <table class="cheat-table">
+              <tr>
+                <td>git branch</td>
+                <td>List all local branches</td>
+              </tr>
+              <tr>
+                <td>git branch -a</td>
+                <td>List all local and remote branches</td>
+              </tr>
+              <tr>
+                <td>git checkout -b [name]</td>
+                <td>Create and switch to a new branch</td>
+              </tr>
+              <tr>
+                <td>git merge [branch]</td>
+                <td>Merge a branch into the current active branch</td>
+              </tr>
+              <tr>
+                <td>git branch -d [name]</td>
+                <td>Delete a fully merged local branch</td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="cheat-category">
+            <h3>Remote Operations</h3>
+            <table class="cheat-table">
+              <tr>
+                <td>git remote add origin [url]</td>
+                <td>Link local repo to a remote server</td>
+              </tr>
+              <tr>
+                <td>git push origin [branch]</td>
+                <td>Upload local branch commits to the remote</td>
+              </tr>
+              <tr>
+                <td>git pull origin [branch]</td>
+                <td>Fetch and merge remote branch into current branch</td>
+              </tr>
+              <tr>
+                <td>git fetch</td>
+                <td>Download remote changes without merging</td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="cheat-category">
+            <h3>History & Inspection</h3>
+            <table class="cheat-table">
+              <tr>
+                <td>git log --oneline --graph</td>
+                <td>Compact visual graph of commit history</td>
+              </tr>
+              <tr>
+                <td>git diff</td>
+                <td>Show unstaged changes in the working directory</td>
+              </tr>
+              <tr>
+                <td>git diff --staged</td>
+                <td>Show changes staged but not yet committed</td>
+              </tr>
+              <tr>
+                <td>git show [hash]</td>
+                <td>Display metadata and diff for a specific commit</td>
+              </tr>
+            </table>
+          </div>
+        </section>
       </main>
 
       <footer>
