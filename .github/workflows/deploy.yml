@@ -27,10 +27,19 @@ jobs:
       - name: Setup Cloud Pages Node
         uses: actions/configure-pages@v4
 
+      # New Step: Prepares page.html to be served as the root homepage
+      - name: Prepare page.html as entry point
+        run: |
+          if [ -f "page.html" ]; then
+            cp page.html index.html
+          else
+            echo "Error: page.html not found!" && exit 1
+          fi
+
       - name: Upload Static Web Assets
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'  # Deploy current root folder containing index.html
+          path: '.'  # Deploys the root directory containing the newly generated index.html
 
       - name: Deploy Live Instance to Production
         id: deployment
