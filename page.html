@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Static Frontend Git Laboratory Dashboard</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #38bdf8;
+            --success-color: #4ade80;
+            --warning-color: #f59e0b;
+            --danger-color: #f43f5e;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.3rem;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .team-container {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .team-member {
+            background-color: #090d16;
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-align: left;
+            min-width: 260px;
+        }
+
+        .member-name {
+            display: block;
+            font-weight: bold;
+            color: var(--success-color);
+            font-size: 1rem;
+        }
+
+        .member-id {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-family: 'Courier New', Courier, monospace;
+            margin-top: 0.25rem;
+        }
+
+        .overview-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .overview-box h2 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-color);
+        }
+
+        .card h2 {
+            font-size: 1.25rem;
+            color: var(--success-color);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.25rem;
+            flex-grow: 1;
+        }
+
+        .code-block {
+            background-color: #090d16;
+            padding: 0.75rem;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85rem;
+            color: #e2e8f0;
+            overflow-x: auto;
+            border-left: 3px solid var(--accent-color);
+            white-space: pre;
+            line-height: 1.4;
+        }
+
+        .card.alert h2 {
+            color: var(--warning-color);
+        }
+
+        .card.alert .code-block {
+            border-left-color: var(--warning-color);
+        }
+
+        .card.danger h2 {
+            color: var(--danger-color);
+        }
+
+        .card.danger .code-block {
+            border-left-color: var(--danger-color);
+        }
+
+        .wide-section {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .wide-section h2 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.6rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .log-step {
+            margin-bottom: 2rem;
+        }
+
+        .log-step h3 {
+            font-size: 1.1rem;
+            color: var(--success-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .split-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .section-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+        }
+
+        .section-box h2 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .timeline {
+            list-style: none;
+        }
+
+        .timeline li {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .timeline li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .timeline strong {
+            color: var(--text-main);
+            display: block;
+        }
+
+        .timeline span {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .badge-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .badge {
+            background: #090d16;
+            border: 1px solid var(--border-color);
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .badge span {
+            color: var(--accent-color);
+            font-weight: bold;
+            display: block;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .split-layout {
+                grid-template-columns: 1fr;
+            }
+            .team-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Software Engineering Laboratory: Assignment 1</h1>
+            <p>Comprehensive Git Version Control & Automated Deployment Report</p>
+            
+            <div class="team-container">
+                <div class="team-member">
+                    <span class="member-name">Mohammad Jafaripour</span>
+                    <span class="member-id">Student ID: 401105797</span>
+                </div>
+                <div class="team-member">
+                    <span class="member-name">Mohammadamin Heidari</span>
+                    <span class="member-id">Student ID: 401170553</span>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="overview-box">
+                <h2>1. Project Overview & Objectives</h2>
+                <p>The core objective of this laboratory assignment is to build a robust mental model of Git architecture, collaborative workflows, and Continuous Integration/Continuous Deployment (CI/CD) pipelines. Instead of relying on abstraction layers provided by modern IDE graphical interfaces, this project was developed entirely inside the <strong>Command Line Interface (CLI)</strong>.</p>
+                <br>
+                <p>By executing foundational "plumbing" and "porcelain" Git commands manually, we gained absolute visibility over structural transitions across the three local Git states (Working Directory, Staging Area, Local Repository) and the upstream Remote Server. The practical artifact chosen for this lab is a static HTML/CSS developer dashboard tracking our specific assignment metrics.</p>
+            </section>
+
+            <h2 style="color: var(--accent-color); margin-bottom: 1.5rem; font-size: 1.6rem;">2. Core Requirements & Engineering Decisions</h2>
+            <div class="grid">
+                <div class="card">
+                    <h2>01. CLI Execution</h2>
+                    <p>Execute all Git version control operations manually inside the native terminal environment. Avoid IDE graphical interfaces to master foundational plumbing commands.</p>
+                    <div class="code-block">git status
+git log --oneline --graph</div>
+                </div>
+
+                <div class="card">
+                    <h2>02. Environment Hygiene</h2>
+                    <p>Incorporate a structured .gitignore file right at project initialization to prevent local environment debris or system-specific artifacts from tracking.</p>
+                    <div class="code-block"># .gitignore
+node_modules/
+.DS_Store
+dist/</div>
+                </div>
+
+                <div class="card">
+                    <h2>03. Semantic Architecture</h2>
+                    <p>Maintain at least 3 distinct, functional branches (e.g., main, dev, feature/*) to manage stable production increments and separate active development tracks.</p>
+                    <div class="code-block">git branch -a
+git checkout -b dev</div>
+                </div>
+
+                <div class="card alert">
+                    <h2>04. Commit History</h2>
+                    <p>Document the application construction with a minimum of 20 distinct, atomic, and meaningful commits tracking unique milestones or logical changes.</p>
+                    <div class="code-block">git commit -m "feat: implement layout"
+Total Commits Needed: &ge; 20</div>
+                </div>
+
+                <div class="card danger">
+                    <h2>05. Conflict Resolution</h2>
+                    <p>Simulate, analyze, and manually resolve at least 2 structural merge conflicts inside the source text when integrating converging branch timelines.</p>
+                    <div class="code-block">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+color: var(--accent-color);
+=======
+color: #38bdf8;
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; dev</div>
+                </div>
+
+                <div class="card">
+                    <h2>06. Branch Security</h2>
+                    <p>Configure repository platform rules to entirely block direct force-pushes to the main branch, mandating peer reviews before code merging can take place.</p>
+                    <div class="code-block">Target: main
+Require Pull Request: Enforced</div>
+                </div>
+            </div>
+
+            <section class="wide-section">
+                <h2>3. Step-by-Step Terminal Execution Log</h2>
+                
+                <div class="log-step">
+                    <h3>Step 1: Initializing the Project Workspace</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 0.5rem;">Initialize a clean local directory and set up basic repo tracking rules.</p>
+                    <div class="code-block">git init software-lab-1
+cd software-lab-1
+echo -e "node_modules/\n.DS_Store\ndist/" > .gitignore
+git add .gitignore
+git commit -m "chore: initialize project workspace and .gitignore"</div>
+                </div>
+
+                <div class="log-step">
+                    <h3>Step 2: Setting up Upstream Cloud Remotes</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 0.5rem;">Link the local repository with the remote cloud source repository.</p>
+                    <div class="code-block">git remote add origin https://github.com/mohammad-jafaripour/software-lab-1.git
+git remote -v</div>
+                </div>
+
+                <div class="log-step">
+                    <h3>Step 3: Establishing the Semantic Branch Architecture</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 0.5rem;">Isolate development tasks from the highly stable production track.</p>
+                    <div class="code-block">git checkout -b dev
+git checkout -b feature/dashboard-ui</div>
+                </div>
+
+                <div class="log-step">
+                    <h3>Step 4: Iterating Atomic Commit Logs (Example Sequence)</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 0.5rem;">Saving progressive changes step-by-step to build history milestones.</p>
+                    <div class="code-block">git add index.html
+git commit -m "feat: design dashboard grid framework layout"
+git add style.css
+git commit -m "style: apply dark theme color palette variables"</div>
+                </div>
+
+                <div class="log-step">
+                    <h3>Step 5: Handling and Resolving Merge Conflicts</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 0.5rem;">Manually auditing converging code blocks when data conflicts occur.</p>
+                    <div class="code-block">git checkout feature/dashboard-ui
+git merge dev
+# Terminal returns: "CONFLICT (content): Merge conflict in index.html"
+# Open index.html, clean the separation block markers manually, then:
+git add index.html
+git commit -m "fix: resolve text grid overlap merge conflict manually"</div>
+                </div>
+
+                <div class="log-step">
+                    <h3>Step 6: Upstream Sync and Pull Request Processing</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 0.5rem;">Push safe features upstream to invoke structured code inspection paths.</p>
+                    <div class="code-block">git push origin feature/dashboard-ui
+git checkout dev
+git pull origin dev</div>
+                </div>
+            </section>
+
+            <section class="wide-section">
+                <h2>4. CI/CD Automated Deployment Configuration</h2>
+                <p style="color: var(--text-muted); margin-bottom: 1rem;">To achieve automated pipeline operations, the following automated script environment configuration was declared under <code style="color: var(--accent-color);">.github/workflows/deploy.yml</code> to power real-time updates directly into the GitHub Pages hosting service upon code approval.</p>
+                <div class="code-block">name: Deploy Static Site to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Tree
+        uses: actions/checkout@v4
+
+      - name: Setup Cloud Pages Node
+        uses: actions/configure-pages@v4
+
+      - name: Upload Static Web Assets
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy Live Instance to Production
+        id: deployment
+        uses: actions/deploy-pages@v4</div>
+            </section>
+
+            <div class="split-layout">
+                <section class="section-box">
+                    <h2>CI/CD Actions Deployment Workflow</h2>
+                    <ul class="timeline">
+                        <li>
+                            <strong>Shared Repository Integration</strong>
+                            <span>All registered team members concurrently collaborate on code changes using a centralized GitHub remote hosting platform destination.</span>
+                        </li>
+                        <li>
+                            <strong>Peer Review Validation</strong>
+                            <span>Isolate features into staging branches, push updates upstream, and propose integration changes exclusively via Pull Requests.</span>
+                        </li>
+                        <li>
+                            <strong>Automated Pipeline Trigger</strong>
+                            <span>GitHub Actions picks up accepted merges to the main branch automatically via configured workflow parameters.</span>
+                        </li>
+                        <li>
+                            <strong>Static Cloud Hosting</strong>
+                            <span>The automation runner compiles assets and updates the running application interface live on GitHub Pages.</span>
+                        </li>
+                    </ul>
+                </section>
+
+                <aside class="section-box">
+                    <h2>Lab Targets</h2>
+                    <div class="badge-list">
+                        <div class="badge">
+                            <span>Platform Engine</span>
+                            Pure Static HTML5 / CSS3
+                        </div>
+                        <div class="badge">
+                            <span>Branch Total</span>
+                            3+ Semantic Paths
+                        </div>
+                        <div class="badge">
+                            <span>History Volume</span>
+                            20+ Verifiable Commits
+                        </div>
+                        <div class="badge">
+                            <span>Conflicts Handled</span>
+                            2+ Instances Resolved
+                        </div>
+                        <div class="badge">
+                            <span>Pipeline Engine</span>
+                            GitHub Actions Engine
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </main>
+
+        <footer>
+            <p>Shared Engineering Portfolio • Automated Deployment System Matrix</p>
+        </footer>
+    </div>
+
+</body>
+</html>

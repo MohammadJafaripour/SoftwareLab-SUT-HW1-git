@@ -1,0 +1,37 @@
+name: Deploy Static Site to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Code ingestion triggers automation only on protected branch changes
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps: deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Tree
+        uses: actions/checkout@v4
+
+      - name: Setup Cloud Pages Node
+        uses: actions/configure-pages@v4
+
+      - name: Upload Static Web Assets
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'  # Deploy current root folder containing index.html
+
+      - name: Deploy Live Instance to Production
+        id: deployment
+        uses: actions/deploy-pages@v4
