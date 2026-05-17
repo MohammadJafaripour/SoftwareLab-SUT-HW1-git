@@ -40,7 +40,7 @@
             text-align: center;
             margin-bottom: 3rem;
             border-bottom: 2px solid var(--border-color);
-            padding-bottom: 1.5rem;
+            padding-bottom: 2rem;
         }
 
         header h1 {
@@ -52,6 +52,38 @@
         header p {
             color: var(--text-muted);
             font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .team-container {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .team-member {
+            background-color: #090d16;
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-align: left;
+            min-width: 240px;
+        }
+
+        .member-name {
+            display: block;
+            font-weight: bold;
+            color: var(--success-color);
+            font-size: 1rem;
+        }
+
+        .member-id {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-family: 'Courier New', Courier, monospace;
+            margin-top: 0.25rem;
         }
 
         .grid {
@@ -200,6 +232,10 @@
             .split-layout {
                 grid-template-columns: 1fr;
             }
+            .team-container {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>
@@ -209,6 +245,17 @@
         <header>
             <h1>Automated Static Frontend Lab</h1>
             <p>Laboratory Assignment Documentation: Version Control, Collaboration, and Deployment Rules</p>
+            
+            <div class="team-container">
+                <div class="team-member">
+                    <span class="member-name">Mohammad Jafaripour</span>
+                    <span class="member-id">Student ID: 401105797</span>
+                </div>
+                <div class="team-member">
+                    <span class="member-name">Mohammadamin Heidari</span>
+                    <span class="member-id">Student ID: 401170553</span>
+                </div>
+            </div>
         </header>
 
         <main>
